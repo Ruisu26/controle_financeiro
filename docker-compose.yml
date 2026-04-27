@@ -1,0 +1,47 @@
+name: orcamento_domestico
+services:
+    financeiro-site:
+        cpu_shares: 90
+        command: []
+        container_name: orcamento_domestico_app
+        deploy:
+            resources:
+                limits:
+                    memory: "16089350144"
+        hostname: orcamento_domestico_app
+        image: php:8.2-apache
+        labels:
+            icon: /home/celeiro_producao/servicos/orcamento_domestico/app/assets/Logo.png
+        networks:
+            default: null
+        ports:
+            - mode: ingress
+              target: 80
+              published: "8080"
+              protocol: tcp
+        restart: always
+        volumes:
+            - type: bind
+              source: /home/celeiro_producao/servicos/orcamento_domestico/app
+              target: /var/www/html
+              bind:
+                create_host_path: true
+            - type: bind
+              source: /home/celeiro_producao/servicos/orcamento_domestico/dados
+              target: /var/www/dados_salvos
+              bind:
+                create_host_path: true
+networks:
+    default:
+        name: orcamento_domestico_default
+x-casaos:
+    author: self
+    category: self
+    hostname: 100.82.97.16
+    icon: /home/celeiro_producao/servicos/orcamento_domestico/app/assets/Logo.png
+    index: /
+    is_uncontrolled: false
+    port_map: "8080"
+    scheme: http
+    title:
+        custom: Orçamento Doméstico
